@@ -35,9 +35,8 @@ PowerShell.exe -ExecutionPolicy Bypass -File "C:\Backup_System\backup.ps1"
 
 ### Step 3: Automate with Windows Task Scheduler
 To make the backup fully autonomous, register it as a daily background task. Open PowerShell as Administrator and execute the following command:
-PowerShell
-
-```Register-ScheduledTask -TaskName "Company_Auto_Backup" -Trigger (New-ScheduledTaskTrigger -Daily -At 3:00AM) -Action (New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-ExecutionPolicy Bypass -File C:\Backup_System\backup.ps1") -Description "Automated database backup with retention policy" -Force
+```PowerShell
+Register-ScheduledTask -TaskName "Company_Auto_Backup" -Trigger (New-ScheduledTaskTrigger -Daily -At 3:00AM) -Action (New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-ExecutionPolicy Bypass -File C:\Backup_System\backup.ps1") -Description "Automated database backup with retention policy" -Force
 ```
 
 ### Log Output Example
