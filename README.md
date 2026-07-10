@@ -25,4 +25,24 @@ By default, Windows blocks the execution of untrusted PowerShell scripts. To run
 **Option A: Bypass for the current user only (No permanent system changes)**
 Open PowerShell and run:
 ```powershell
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force```
+**Option B: Direct execution bypass (One-time run without altering policies)**
+Run the script explicitly by ignoring the execution restrictions:
+```PowerShell
+PowerShell.exe -ExecutionPolicy Bypass -File "C:\Backup_System\backup.ps1"```
+
+### Step 3: Automate with Windows Task Scheduler
+To make the backup fully autonomous, register it as a daily background task. Open PowerShell as Administrator and execute the following command:
+PowerShell
+
+```Register-ScheduledTask -TaskName "Company_Auto_Backup" -Trigger (New-ScheduledTaskTrigger -Daily -At 3:00AM) -Action (New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-ExecutionPolicy Bypass -File C:\Backup_System\backup.ps1") -Description "Automated database backup with retention policy" -Force```
+
+### Log Output Example
+
+When executed successfully, the console and backup_log.txt will output:
+```Plaintext
+[2026-07-10 23:19:16] [INFO] ========================================
+[2026-07-10 23:19:16] [INFO] Backup process started.
+[2026-07-10 23:19:16] [INFO] New backup created successfully: Backup_2026-07-10_23-19.zip
+[2026-07-10 23:19:16] [INFO] No old backups found to purge.
+[2026-07-10 23:19:16] [INFO] Backup process finished successfully.```
